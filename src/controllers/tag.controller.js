@@ -2,7 +2,7 @@ import { prisma } from '../config/db.js'
 
 export const createTag = async (req, res) => {
   const { name, color } = req.body
-  const userId = req.user.id
+  const userId = req.userId
   try {
     const newTag = await prisma.tags.create({
       data: {
@@ -19,7 +19,7 @@ export const createTag = async (req, res) => {
 }
 
 export const getTags = async (req, res) => {
-  const { userId } = req.user.id
+  const { userId } = req.userId
   try {
     const tags = await prisma.tags.findMany({
       where: { creatorId: userId }
