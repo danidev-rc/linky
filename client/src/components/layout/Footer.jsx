@@ -1,3 +1,9 @@
 export default function Footer() {
-  return <div>Footer</div>
+  return (
+    <footer className="w-full bg-transparent text-center py-4">
+      <p className="text-sm text-gray-500">
+        © 2023 Linky. Todos los derechos reservados.
+      </p>
+    </footer>
+  )
 }
