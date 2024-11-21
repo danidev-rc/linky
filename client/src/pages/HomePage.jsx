@@ -1,6 +1,8 @@
+import { Github, Link } from 'lucide-react'
+
 export default function HomePage() {
   return (
-    <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] dark:bg-neutral-900">
+    <div className="py-28 flex justify-center">
       <section className="flex flex-col items-center px-6 pt-16 text-center md:pt-24 lg:pt-32 text-white">
         <span>
           If you spot any issues or have any suggestions, please open an
@@ -17,15 +19,17 @@ export default function HomePage() {
         </p>
         <div className="mt-8 items-center justify-center gap-x-3 space-y-3 duration-700 animate-in fade-in-30 sm:flex sm:space-y-0 flex space-x-4">
           <a
-            className="inline-flex items-center space-x-3 justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 dark:focus-visible:ring-neutral-700 focus-visible:ring-neutral-500 bg-neutral-800 text-neutral-50 shadow hover:bg-neutral-800/90 dark:bg-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-700/50 h-12  px-5 group"
-            href="/"
+            className="inline-flex items-center space-x-3 justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 dark:focus-visible:ring-neutral-700 focus-visible:ring-neutral-500 bg-neutral-800 text-neutral-50 shadow hover:bg-neutral-800/90 dark:bg-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-700/50 h-12  px-5 group gap-x-2"
+            href="/linky"
           >
-            Create Link
+            <Link />
+            Create Linky
           </a>
           <a
-            className="inline-flex items-center space-x-3 justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 dark:focus-visible:ring-neutral-700 focus-visible:ring-neutral-500 bg-neutral-800 text-neutral-50 shadow hover:bg-neutral-800/90 dark:bg-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-700/50 h-12  px-5 group"
-            href="/"
+            className="inline-flex items-center space-x-3 justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50 dark:focus-visible:ring-neutral-700 focus-visible:ring-neutral-500 bg-neutral-800 text-neutral-50 shadow hover:bg-neutral-800/90 dark:bg-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-700/50 h-12  px-5 group gap-x-2"
+            href="https://github.com/danidev-rc/linky.git"
           >
+            <Github />
             Start on GitHub
           </a>
         </div>
