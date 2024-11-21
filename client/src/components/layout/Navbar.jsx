@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom'
 import { Github } from '../icons/logos'
 import { ComandK } from '../commandK'
 import ButtonUser from '../auth/user-btn'
-import ModeToggle from '../ModeToggle'
 
 export default function Navbar() {
   return (
-    <header className="flex justify-center sticky top-0 py-6 px-6 bg-neutral-50 dark:bg-neutral-900 z-50">
-      <nav className="flex w-full items-center justify-between container">
+    <header className="flex justify-center sticky top-0 py-6 px-6 bg-neutral-50 dark:bg-neutral-900 z-50 dark:border-b dark:border-neutral-800">
+      <nav
+        className="flex w-full items-center justify-between container 
+      max-w-6xl px-4 mx-auto md:px-6 lg:px-8 xl:px-0 2xl:px-0"
+      >
         <div className="flex items-center space-x-5">
           <div className="flex items-center space-x-1 pr-1 md:pr-4">
             <Link
@@ -31,7 +33,6 @@ export default function Navbar() {
         <div className="flex items-center space-x-1">
           <Github size="24" />
           <ComandK />
-          <ModeToggle />
           <ButtonUser />
         </div>
       </nav>

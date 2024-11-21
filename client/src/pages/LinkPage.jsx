@@ -1,10 +1,29 @@
+import { useState } from 'react'
 import CardLink from '../components/link/link-card'
-import { ButtonTag, ButtonAmount } from '../components/link/link-button'
+import {
+  ButtonTag,
+  ButtonAmount,
+  ButtonCreateLink,
+} from '../components/link/link-button'
+import FormLink from '../components/link/link-form'
 
 export default function LinkPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [currentLink, setCurrentLink] = useState(null)
+
+  const handleCreateLink = () => {
+    setCurrentLink(null)
+    setIsModalOpen(true)
+  }
+
+  const handleEditLink = (link) => {
+    setCurrentLink(link)
+    setIsModalOpen(true)
+  }
+
   return (
-    <div className="text-white ">
-      <div className="flex justify-between px-24">
+    <div className="text-white pt-8">
+      <div className="flex justify-between px-14">
         <div className="relative mb-4">
           <input
             type="text"
@@ -38,24 +57,25 @@ export default function LinkPage() {
             <ButtonTag name="Select tag" />
           </div>
           <div>
-            <span>+Create Link</span>
+            <span>
+              <ButtonCreateLink onClick={handleCreateLink} />
+            </span>
           </div>
         </div>
       </div>
-      <section className="grid grid-cols-3 px-24 gap-6 md:grid-cols-2">
+      <section className="grid grid-cols-1 px-14 gap-6 md:grid-cols-2 2xl:grid-cols-3">
         <CardLink
           name="example"
           url="https://example.com"
           clicks={0}
           date="16 January,2024"
+          onEdit={handleEditLink}
         />
-        <CardLink
-          name="example"
-          url="https://example.com"
-          clicks={0}
-          date="16 January,2024"
-        />
+        {/* Repite CardLink para otros enlaces */}
       </section>
+      {isModalOpen && (
+        <FormLink link={currentLink} onClose={() => setIsModalOpen(false)} />
+      )}
     </div>
   )
 }
