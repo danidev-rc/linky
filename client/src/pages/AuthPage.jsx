@@ -1,13 +1,43 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+import { useAuth } from '../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true)
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
+  const { signup, isAuthenticated, errors: registerErrors } = useAuth()
+  const { signin, errors: loginErrors } = useAuth()
+
+  const navigate = useNavigate()
+  const [showPassword, setShowPassword] = useState(false)
+
+  useEffect(() => {
+    if (isAuthenticated) navigate('/linky')
+  }, [isAuthenticated, navigate])
+
+  const onSubmitSignup = handleSubmit(async (values) => {
+    signup(values)
+  })
+
+  const onSubmitSignin = handleSubmit((data) => {
+    signin(data)
+  })
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword)
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-neutral-900">
       {isLogin ? (
         <form
-          action=""
+          onSubmit={onSubmitSignin}
           className="bg-neutral-900 p-8 border border-neutral-700 rounded-lg w-full max-w-md"
         >
           <h1 className="text-2xl font-semibold text-white mb-6">Login</h1>
@@ -21,8 +51,14 @@ export default function AuthPage() {
             <input
               type="text"
               id="email"
+              {...register('email', { required: 'Email is required' })}
               className="mt-1 block w-full px-3 py-2 bg-neutral-900 border border-neutral-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-neutral-500"
             />
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.email.message}
+              </p>
+            )}
           </div>
           <div className="mb-4">
             <label
@@ -32,17 +68,24 @@ export default function AuthPage() {
               Password
             </label>
             <input
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               id="password"
+              {...register('password', { required: 'Password is required' })}
               className="mt-1 block w-full px-3 py-2 bg-neutral-900 border border-neutral-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-neutral-500"
             />
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.password.message}
+              </p>
+            )}
           </div>
           <div className="flex justify-center gap-4">
             <button
               type="button"
               className="px-4 py-2 text-white rounded-md hover:bg-neutral-500 focus:outline-none focus:ring-2 transition-colors duration-500"
+              onClick={() => setIsLogin(false)}
             >
-              Cancel
+              Register
             </button>
             <button
               type="submit"
@@ -51,20 +94,10 @@ export default function AuthPage() {
               Login
             </button>
           </div>
-          <div className="flex justify-between items-center text-white text-sm text-center mt-4 w-full">
-            <p>Dont have an account?</p>
-            <button
-              type="button"
-              className="text-blue-500 hover:underline"
-              onClick={() => setIsLogin(false)}
-            >
-              Register
-            </button>
-          </div>
         </form>
       ) : (
         <form
-          action=""
+          onSubmit={onSubmitSignup}
           className="bg-neutral-900 p-8 border border-neutral-700 rounded-lg w-full max-w-md"
         >
           <h1 className="text-2xl font-semibold text-white mb-6">
@@ -80,8 +113,12 @@ export default function AuthPage() {
             <input
               type="text"
               id="name"
+              {...register('name', { required: 'Name is required' })}
               className="mt-1 block w-full px-3 py-2 bg-neutral-900 border border-neutral-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-neutral-500"
             />
+            {errors.name && (
+              <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+            )}
           </div>
           <div className="mb-4">
             <label
@@ -93,8 +130,14 @@ export default function AuthPage() {
             <input
               type="text"
               id="username"
+              {...register('username', { required: 'Username is required' })}
               className="mt-1 block w-full px-3 py-2 bg-neutral-900 border border-neutral-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-neutral-500"
             />
+            {errors.username && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.username.message}
+              </p>
+            )}
           </div>
           <div className="mb-4">
             <label
@@ -106,8 +149,14 @@ export default function AuthPage() {
             <input
               type="text"
               id="email"
+              {...register('email', { required: 'Email is required' })}
               className="mt-1 block w-full px-3 py-2 bg-neutral-900 border border-neutral-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-neutral-500"
             />
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.email.message}
+              </p>
+            )}
           </div>
           <div className="mb-4">
             <label
@@ -117,33 +166,30 @@ export default function AuthPage() {
               Password
             </label>
             <input
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               id="password"
+              {...register('password', { required: 'Password is required' })}
               className="mt-1 block w-full px-3 py-2 bg-neutral-900 border border-neutral-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-neutral-500"
             />
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.password.message}
+              </p>
+            )}
           </div>
           <div className="flex justify-center gap-4">
             <button
               type="button"
               className="px-4 py-2 text-white rounded-md hover:bg-neutral-500 focus:outline-none focus:ring-2 transition-colors duration-500"
+              onClick={() => setIsLogin(true)}
             >
-              Cancel
+              Login
             </button>
             <button
               type="submit"
               className="px-4 py-2 bg-neutral-800 text-white rounded-md flex items-center hover:bg-neutral-600 focus:outline-none focus:ring-2"
             >
               Register
-            </button>
-          </div>
-          <div className="flex justify-between items-center text-white text-sm text-center mt-4 w-full">
-            <p>Already have an account?</p>
-            <button
-              type="button"
-              className="text-blue-500 hover:underline"
-              onClick={() => setIsLogin(true)}
-            >
-              Login
             </button>
           </div>
         </form>

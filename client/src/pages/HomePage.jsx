@@ -6,8 +6,13 @@ export default function HomePage() {
       <section className="flex flex-col items-center px-6 pt-16 text-center md:pt-24 lg:pt-32 text-white">
         <span>
           If you spot any issues or have any suggestions, please open an
-          <a href="https://github.com/danidev-rc/linky"> issue</a> in the
-          repository.
+          <a
+            href="https://github.com/danidev-rc/linky/issues/new"
+            className="font-bold text-blue-400 hover:underline focus-visible:ring-2 px-1"
+          >
+            issue
+          </a>
+          in the repository.
         </span>
         <h1 className="mt-6 text-6xl font-bold tracking-tight lg:text-6xl max-w-[75ch] duration-500 animate-in fade-in-5 slide-in-from-bottom-2">
           Welcome to Linky 🚀

@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useLinks } from '../context/LinkContext'
 import CardLink from '../components/link/link-card'
 import {
   ButtonTag,
@@ -10,6 +11,11 @@ import FormLink from '../components/link/link-form'
 export default function LinkPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [currentLink, setCurrentLink] = useState(null)
+  const { links, getLinks } = useLinks()
+
+  useEffect(() => {
+    getLinks()
+  }, [])
 
   const handleCreateLink = () => {
     setCurrentLink(null)
@@ -64,14 +70,16 @@ export default function LinkPage() {
         </div>
       </div>
       <section className="grid grid-cols-1 px-14 gap-6 md:grid-cols-2 2xl:grid-cols-3">
-        <CardLink
-          name="example"
-          url="https://example.com"
-          clicks={0}
-          date="16 January,2024"
-          onEdit={handleEditLink}
-        />
-        {/* Repite CardLink para otros enlaces */}
+        {links.map(link => (
+          <CardLink
+            key={link.id}
+            linky={link.linky}
+            url={link.url}
+            clicks={link.clicks}
+            date={link.createdAt}
+            onEdit={() => handleEditLink(link)}
+          />
+        ))}
       </section>
       {isModalOpen && (
         <FormLink link={currentLink} onClose={() => setIsModalOpen(false)} />
