@@ -1,11 +1,11 @@
 import { Activity, Copy, Bolt, Trash2 } from 'lucide-react'
 
-export default function CardLink({ name, clicks, url, date, onEdit }) {
+export default function CardLink({ linky, clicks, url, date, onEdit }) {
   return (
     <div className="px-2 py-2 border border-neutral-500 rounded-lg">
       <div className="flex justify-between items-center">
         <a href="/" className="text-white font-mono">
-          /{name}
+          /{linky}
         </a>
         <div className="flex gap-2">
           <button className="flex gap-2">
@@ -16,7 +16,7 @@ export default function CardLink({ name, clicks, url, date, onEdit }) {
           <button>
             <Copy width={18} />
           </button>
-          <button onClick={() => onEdit({ name, clicks, url, date })}>
+          <button onClick={() => onEdit({ linky, clicks, url, date })}>
             <Bolt width={18} />
           </button>
           <button>

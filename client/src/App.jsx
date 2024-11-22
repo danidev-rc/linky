@@ -4,21 +4,31 @@ import Footer from './components/layout/Footer'
 import HomePage from './pages/HomePage'
 import AuthPage from './pages/AuthPage'
 import LinkyPage from './pages/LinkPage'
+import ProtectedRoute from './routes/ProtectedRoute'
+
+import { AuthProvider } from './context/AuthContext'
+import { LinkProvider } from './context/LinkContext'
 
 function App() {
   return (
     <div className="flex flex-col min-h-screen">
-      <BrowserRouter>
-        <Navbar />
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/linky" element={<LinkyPage />} />
-            <Route path="/auth" element={<AuthPage />} />
-          </Routes>
-        </main>
-        <Footer />
-      </BrowserRouter>
+      <AuthProvider>
+        <LinkProvider>
+          <BrowserRouter>
+            <Navbar />
+            <main className="flex-grow">
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/auth" element={<AuthPage />} />
+                <Route element={<ProtectedRoute />}>
+                  <Route path="/linky" element={<LinkyPage />} />
+                </Route>
+              </Routes>
+            </main>
+            <Footer />
+          </BrowserRouter>
+        </LinkProvider>
+      </AuthProvider>
     </div>
   )
 }
