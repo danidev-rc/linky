@@ -70,7 +70,7 @@ export default function LinkPage() {
         </div>
       </div>
       <section className="grid grid-cols-1 px-14 gap-6 md:grid-cols-2 2xl:grid-cols-3">
-        {links.map(link => (
+        {links.map((link) => (
           <CardLink
             key={link.id}
             linky={link.linky}

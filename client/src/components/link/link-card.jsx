@@ -1,33 +1,92 @@
 import { Activity, Copy, Bolt, Trash2 } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { toast } from 'react-hot-toast'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
 
-export default function CardLink({ linky, clicks, url, date, onEdit }) {
+dayjs.extend(utc)
+
+export default function CardLink({
+  linky,
+  clicks,
+  url,
+  date,
+  onEdit,
+  onDelete,
+}) {
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(`https://yourdomain.com/${linky}`)
+    toast.success('Link copied to clipboard!')
+  }
+
   return (
-    <div className="px-2 py-2 border border-neutral-500 rounded-lg">
-      <div className="flex justify-between items-center">
-        <a href="/" className="text-white font-mono">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+      className="px-4 py-3 border border-neutral-700 rounded-lg bg-neutral-800 shadow-lg hover:shadow-xl transition-all duration-300"
+    >
+      <div className="flex justify-between items-center mb-2">
+        <motion.a
+          href={`/${linky}`}
+          className="text-white font-mono text-lg hover:text-blue-400 transition-colors duration-200"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
           /{linky}
-        </a>
-        <div className="flex gap-2">
-          <button className="flex gap-2">
-            <Activity width={18} color="#008000" />
-            {clicks}
-            <span>|</span>
-          </button>
-          <button>
-            <Copy width={18} />
-          </button>
-          <button onClick={() => onEdit({ linky, clicks, url, date })}>
-            <Bolt width={18} />
-          </button>
-          <button>
-            <Trash2 width={18} />
-          </button>
+        </motion.a>
+        <div className="flex gap-3">
+          <motion.button
+            className="flex items-center gap-1 text-green-500 hover:text-green-400 transition-colors duration-200"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <Activity size={18} />
+            <span className="font-mono">{clicks}</span>
+          </motion.button>
+          <motion.button
+            onClick={copyToClipboard}
+            className="text-neutral-400 hover:text-white transition-colors duration-200"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <Copy size={18} />
+          </motion.button>
+          <motion.button
+            onClick={() => onEdit({ linky, clicks, url, date })}
+            className="text-yellow-500 hover:text-yellow-400 transition-colors duration-200"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <Bolt size={18} />
+          </motion.button>
+          <motion.button
+            onClick={() => onDelete(linky)}
+            className="text-red-500 hover:text-red-400 transition-colors duration-200"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <Trash2 size={18} />
+          </motion.button>
         </div>
       </div>
-      <div>
-        <p className="text-neutral-400 font-mono">{url}</p>
-      </div>
-      <div className="flex justify-end font-mono text-sm">{date}</div>
-    </div>
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+        className="text-neutral-400 font-mono text-sm truncate hover:text-clip"
+      >
+        {url}
+      </motion.p>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3 }}
+        className="flex justify-end font-mono text-xs text-neutral-500 mt-2"
+      >
+        {dayjs.utc(date).local().format('DD MMMM, YYYY')}
+      </motion.div>
+    </motion.div>
   )
 }
