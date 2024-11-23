@@ -19,6 +19,8 @@ Content-Type: application/json
   "password": "123456"
 }
 ###
+GET {{BASE_URL}}/auth/profile
+###
 POST {{BASE_URL}}/auth/logout
 ###
 

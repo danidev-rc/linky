@@ -1,5 +1,10 @@
 import { createContext, useContext, useEffect, useState } from 'react'
-import { loginRequest, registerRequest, verifyTokenRequest } from '../api/auth'
+import {
+  loginRequest,
+  registerRequest,
+  verifyTokenRequest,
+  profileRequest,
+} from '../api/auth'
 import Cookies from 'js-cookie'
 
 const AuthContext = createContext()
@@ -48,6 +53,15 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
+  const getUser = async () => {
+    try {
+      const res = await profileRequest()
+      setUser(res.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const logout = async () => {
     Cookies.remove('token')
     setUser(null)
@@ -85,6 +99,7 @@ export const AuthProvider = ({ children }) => {
         signup,
         signin,
         logout,
+        getUser,
         isAuthenticated,
         errors,
         loading,

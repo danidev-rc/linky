@@ -5,6 +5,7 @@ import { Github } from '../icons/logos'
 import { ComandK } from '../commandK'
 import ButtonUser from '../auth/user-btn'
 
+
 export default function Navbar() {
   const navVariants = {
     hidden: { opacity: 0, y: -20 },
@@ -72,7 +73,7 @@ export default function Navbar() {
           variants={itemVariants}
         >
           <motion.a
-            href="https://github.com/yourusername/linky"
+            href="https://github.com/danidev-rc/linky"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.1 }}

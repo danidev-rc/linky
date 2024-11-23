@@ -8,6 +8,7 @@ import ProtectedRoute from './routes/ProtectedRoute'
 
 import { AuthProvider } from './context/AuthContext'
 import { LinkProvider } from './context/LinkContext'
+import SettingsPage from './pages/SettingsPage'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/auth" element={<AuthPage />} />
                 <Route element={<ProtectedRoute />}>
                   <Route path="/linky" element={<LinkyPage />} />
+                  <Route path="/settings" element={<SettingsPage />} />
                 </Route>
               </Routes>
             </main>
