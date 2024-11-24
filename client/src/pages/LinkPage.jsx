@@ -71,7 +71,7 @@ export default function LinkPage() {
         <div className="flex gap-4 items-center">
           <div>
             <span>
-              <ButtonAmount name="10" />
+              <ButtonAmount ammount="10" />
             </span>
           </div>
           <div>

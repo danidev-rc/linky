@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { toast } from 'react-hot-toast'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
+import { REDIRECT_URL } from '../../config'
 
 dayjs.extend(utc)
 
@@ -15,7 +16,7 @@ export default function CardLink({
   onDelete,
 }) {
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(`https://yourdomain.com/${linky}`)
+    navigator.clipboard.writeText(`${REDIRECT_URL}/${linky}`)
     toast.success('Link copied to clipboard!')
   }
 
@@ -29,7 +30,7 @@ export default function CardLink({
     >
       <div className="flex justify-between items-center mb-2">
         <motion.a
-          href={`/${linky}`}
+          href={`${REDIRECT_URL}/${linky}`}
           className="text-white font-mono text-lg hover:text-blue-400 transition-colors duration-200"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
