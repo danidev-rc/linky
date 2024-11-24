@@ -32,7 +32,7 @@ export const LinkProvider = ({ children }) => {
   const createLink = async (link) => {
     try {
       const res = await createLinkRequest(link)
-      console.log(res.data)
+      setLinks([...links, res.data.link])
     } catch (error) {
       console.log(error)
     }
@@ -49,7 +49,8 @@ export const LinkProvider = ({ children }) => {
 
   const updateLink = async (id, link) => {
     try {
-      await updateLinkRequest(id, link)
+      const res = await updateLinkRequest(id, link)
+      setLinks(links.map((l) => (l.id === id ? res.data.link : l)))
     } catch (error) {
       console.log(error)
     }

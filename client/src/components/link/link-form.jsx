@@ -2,25 +2,24 @@ import { useState, useEffect } from 'react'
 import { Link2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-export default function FormLink({ link, onClose }) {
+export default function FormLink({ link, onClose, onSubmit }) {
   const [url, setUrl] = useState('')
   const [shortLink, setShortLink] = useState('')
   const [description, setDescription] = useState('')
-  const [tag, setTag] = useState('')
+  const [tags, setTags] = useState([])
 
   useEffect(() => {
     if (link) {
       setUrl(link.url)
-      setShortLink(link.name)
+      setShortLink(link.linky)
       setDescription(link.description)
-      setTag(link.tag)
+      setTags(link.tags.map((tag) => tag.tag))
     }
   }, [link])
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Lógica para crear o editar el enlace
-    onClose()
+    onSubmit({ url, linky: shortLink, description, tags })
   }
 
   return (
@@ -88,20 +87,20 @@ export default function FormLink({ link, onClose }) {
           </div>
           <div className="mb-4">
             <label
-              htmlFor="tag"
+              htmlFor="tags"
               className="block text-sm font-medium text-gray-300"
             >
-              Select your tag
+              Tags
             </label>
-            <select
-              id="tag"
-              value={tag}
-              onChange={(e) => setTag(e.target.value)}
+            <input
+              type="text"
+              id="tags"
+              value={tags.join(', ')}
+              onChange={(e) =>
+                setTags(e.target.value.split(',').map((tag) => tag.trim()))
+              }
               className="mt-1 block w-full px-3 py-2 bg-neutral-900 border border-neutral-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-neutral-500"
-            >
-              <option value="1">1</option>
-              <option value="2">2</option>
-            </select>
+            />
           </div>
           <div className="flex justify-end gap-4">
             <button

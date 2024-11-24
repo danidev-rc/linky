@@ -23,7 +23,6 @@ export const createLink = async (req, res) => {
           create: tags.map(tag => ({ tag }))
         }
       }
-
     })
     res.json({ message: 'Link created successfully', link: newLink })
   } catch (error) {
@@ -80,7 +79,7 @@ export const updateLink = async (req, res) => {
 export const deleteLink = async (req, res) => {
   const { id } = req.params
   try {
-    await prisma.links.delete({ where: { id } })
+    await prisma.links.delete({ where: { id: parseInt(id) } })
     res.json({ message: 'Link deleted successfully' })
   } catch (error) {
     console.error(error)

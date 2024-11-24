@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { AlertTriangle, Save, Trash2 } from 'lucide-react'
+import { useAuth } from '../context/AuthContext'
 
 export default function SettingsPage() {
+  const { user } = useAuth()
   const [formData, setFormData] = useState({
     name: 'Dante Rodríguez Chambí',
     email: 'dantesamuelrodriguez@gmail.com',
@@ -23,7 +25,6 @@ export default function SettingsPage() {
   return (
     <div className="bg-neutral-900 text-gray-200 p-6">
       <form onSubmit={handleSubmit} className="max-w-2xl mx-auto space-y-12">
-        {/* General Section */}
         <section>
           <h2 className="text-2xl font-semibold text-white mb-4">General</h2>
           <p className="text-gray-400 mb-6">
@@ -39,7 +40,7 @@ export default function SettingsPage() {
                 type="text"
                 id="name"
                 name="name"
-                value={formData.name}
+                value={user.name}
                 onChange={handleChange}
                 className="w-full bg-gray-900 border border-gray-800 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-gray-700"
               />
@@ -53,7 +54,7 @@ export default function SettingsPage() {
                 type="email"
                 id="email"
                 name="email"
-                value={formData.email}
+                value={user.email}
                 onChange={handleChange}
                 className="w-full bg-gray-900 border border-gray-800 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-gray-700"
                 disabled

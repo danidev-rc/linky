@@ -11,7 +11,7 @@ import FormLink from '../components/link/link-form'
 export default function LinkPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [currentLink, setCurrentLink] = useState(null)
-  const { links, getLinks } = useLinks()
+  const { links, getLinks, createLink, updateLink, deleteLink } = useLinks()
 
   useEffect(() => {
     getLinks()
@@ -25,6 +25,21 @@ export default function LinkPage() {
   const handleEditLink = (link) => {
     setCurrentLink(link)
     setIsModalOpen(true)
+  }
+
+  const handleSubmitLink = async (link) => {
+    if (currentLink) {
+      await updateLink(currentLink.id, link)
+    } else {
+      await createLink(link)
+    }
+    setIsModalOpen(false)
+    getLinks()
+  }
+
+  const handleDeleteLink = async (id) => {
+    await deleteLink(id)
+    getLinks()
   }
 
   return (
@@ -56,7 +71,7 @@ export default function LinkPage() {
         <div className="flex gap-4 items-center">
           <div>
             <span>
-              <ButtonAmount name="10/30" />
+              <ButtonAmount name="10" />
             </span>
           </div>
           <div>
@@ -78,11 +93,16 @@ export default function LinkPage() {
             clicks={link.clicks}
             date={link.createdAt}
             onEdit={() => handleEditLink(link)}
+            onDelete={() => handleDeleteLink(link.id)}
           />
         ))}
       </section>
       {isModalOpen && (
-        <FormLink link={currentLink} onClose={() => setIsModalOpen(false)} />
+        <FormLink
+          link={currentLink}
+          onClose={() => setIsModalOpen(false)}
+          onSubmit={handleSubmitLink}
+        />
       )}
     </div>
   )
