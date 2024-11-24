@@ -11,7 +11,9 @@ import FormLink from '../components/link/link-form'
 export default function LinkPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [currentLink, setCurrentLink] = useState(null)
-  const { links, getLinks, createLink, updateLink, deleteLink } = useLinks()
+  const { links, getLinks, createLink, updateLink, deleteLink, searchLinks } =
+    useLinks()
+  const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
     getLinks()
@@ -42,6 +44,16 @@ export default function LinkPage() {
     getLinks()
   }
 
+  const handleSearch = async (e) => {
+    const query = e.target.value
+    setSearchQuery(query)
+    if (query.trim() === '') {
+      getLinks()
+    } else {
+      searchLinks(query)
+    }
+  }
+
   return (
     <div className="text-white pt-8">
       <div className="flex justify-between px-14">
@@ -49,6 +61,8 @@ export default function LinkPage() {
           <input
             type="text"
             placeholder="Search..."
+            value={searchQuery}
+            onChange={handleSearch}
             className="w-full px-4 py-2 text-white bg-neutral-900 border rounded-lg border-neutral-500 focus:outline-none focus:border-neutral-400"
           />
           <span className="absolute inset-y-0 right-0 flex items-center pr-3">
@@ -71,7 +85,7 @@ export default function LinkPage() {
         <div className="flex gap-4 items-center">
           <div>
             <span>
-              <ButtonAmount ammount="10" />
+              <ButtonAmount ammount={links.length} />
             </span>
           </div>
           <div>

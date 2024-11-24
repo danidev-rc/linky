@@ -38,7 +38,11 @@ export const getLinks = async (req, res) => {
       where: { creatorId: userId },
       include: { tags: { select: { tag: true } } }
     })
-    res.json({ links })
+
+    const linkCount = await prisma.links.count({
+      where: { creatorId: userId }
+    })
+    res.json({ links, count: linkCount })
   } catch (error) {
     console.error(error)
     res.status(500).json({ error: 'Error getting links' })
@@ -100,5 +104,26 @@ export const redirectLink = async (req, res) => {
   } catch (error) {
     console.error(error)
     res.status(500).json({ error: 'Error redirecting link' })
+  }
+}
+
+export const searchLinks = async (req, res) => {
+  const { query } = req.params
+  const userId = req.userId
+  try {
+    const links = await prisma.links.findMany({
+      where: {
+        creatorId: userId,
+        OR: [
+          { url: { contains: query } },
+          { description: { contains: query } },
+          { linky: { contains: query } }
+        ]
+      }
+    })
+    res.json({ links })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Error searching links' })
   }
 }

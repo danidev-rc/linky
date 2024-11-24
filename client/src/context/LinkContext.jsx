@@ -5,6 +5,7 @@ import {
   updateLinkRequest,
   deleteLinkRequest,
   getLinkRequest,
+  searchLinksRequest,
 } from '../api/link'
 
 const LinkContext = createContext()
@@ -23,6 +24,15 @@ export const LinkProvider = ({ children }) => {
   const getLinks = async () => {
     try {
       const res = await getLinksRequest()
+      setLinks(res.data.links)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const searchLinks = async (query) => {
+    try {
+      const res = await searchLinksRequest(query)
       setLinks(res.data.links)
     } catch (error) {
       console.log(error)
@@ -70,6 +80,7 @@ export const LinkProvider = ({ children }) => {
       value={{
         links,
         getLinks,
+        searchLinks,
         createLink,
         deleteLink,
         updateLink,

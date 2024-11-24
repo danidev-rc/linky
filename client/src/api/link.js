@@ -9,3 +9,5 @@ export const updateLinkRequest = async (id, link) => axios.put(`/links/${id}`, l
 export const deleteLinkRequest = async (id) => axios.delete(`/links/${id}`)
 
 export const getLinkRequest = async (linky) => axios.get(`/links/${linky}`)
+
+export const searchLinksRequest = async (query) => axios.get(`/links/search/${query}`)
